@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import restaurantList from '../Json'
 import Card from './Cards'
 import Shimmer from './Shimmer'
-import { Link } from 'react-router-dom'
+import { Form, Link } from 'react-router-dom'
 import MainDesign from './MainDesign'
 // import Search from './Search'
 const filterFun = (searchedText, apiChange) => {
@@ -15,7 +15,7 @@ const Body = () => {
     const [allRestaurants, setAllRestaurants] = useState([])
     const [filteredRestaurants, setFilteredRestaurants] = useState([])
     useEffect(() => {
-        console.log('Use effect rendering')
+        // console.log('Use effect rendering')
         fetchData()
         return () => {    // here the component is unmounting
         }
@@ -45,22 +45,24 @@ const Body = () => {
                 <>
                     <MainDesign />
                     <div className='flex flex-col justify-center items-center'>
-                        <div className='flex justify-center items-center' style={{ padding: '1rem' }}>
-                            <input
-                                className='w-96 h-10 m-5 border-solid border-2 border-gray-600 placeholder:italic placeholder:text-slate-400 block bg-white rounded-md py-2 pl-4  shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm'
-                                placeholder='Search Restaurants'
-                                value={searchText}
-                                onChange={(e) => {
-                                    setSearchText(e.target.value)
-                                }}
-                            />
-                            <button className='h-10 bg-slate-100' onClick={() => {
-                                console.log('working')
-                                const filteredJsonData = filterFun(searchText, allRestaurants)
-                                setFilteredRestaurants(filteredJsonData)
-                            }}> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                                </svg></button>
+                        <div style={{ padding: '1rem' }}>
+                            <form className='flex justify-center items-center' onSubmit={(e) => e.preventDefault()}>
+                                <input
+                                    className='w-96 h-10 m-5 border-solid border-2 border-gray-600 placeholder:italic placeholder:text-slate-400 block bg-white rounded-md py-2 pl-4  shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm'
+                                    placeholder='Search Restaurants'
+                                    value={searchText}
+                                    onChange={(e) => {
+                                        setSearchText(e.target.value)
+                                    }}
+                                />
+                                <button className='h-10 bg-slate-100' onClick={() => {
+                                    console.log('working')
+                                    const filteredJsonData = filterFun(searchText, allRestaurants)
+                                    setFilteredRestaurants(filteredJsonData)
+                                }}> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                    </svg></button>
+                            </form>
                         </div>
                         {(filteredRestaurants?.length === 0) ? <h1>No data is avaliable</h1> :
                             <div className=' flex flex-row justify-center flex-wrap gap-y-6 gap-x-4 md:ml-32 md:mr-32'>

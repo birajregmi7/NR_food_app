@@ -26,7 +26,7 @@ const user = {
             <UserContext.Provider value={user} >
                 <Header />
                 <Outlet />
-                <Footer />
+                {/* <Footer /> */}
             </UserContext.Provider>
             </Provider>
         </>
